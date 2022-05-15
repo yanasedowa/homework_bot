@@ -1,13 +1,10 @@
 import logging
 import sys
 import time
-from email import message
 from http import HTTPStatus
-from urllib.error import HTTPError
 
 import requests
 import telegram
-from telegram.ext import Updater
 
 from settings import (PRACTICUM_TOKEN, RETRY_TIME, TELEGRAM_CHAT_ID,
                       TELEGRAM_TOKEN)
@@ -52,7 +49,7 @@ def get_api_answer(current_timestamp):
         if response.status_code != HTTPStatus.OK:
             logger.error(
                 f'Эндопоинт недоступен. Код ответа API: {response.status_code}'
-                )
+            )
             raise ConnectionError
     return response.json()
 
@@ -103,7 +100,7 @@ def main():
     if check_tokens() is False:
         logger.critical(
             'Обязательные переменные окружения отсутствуют.'
-            )
+        )
         sys.exit()
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
