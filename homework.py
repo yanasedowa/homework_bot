@@ -6,26 +6,15 @@ from http import HTTPStatus
 import requests
 import telegram
 
-from settings import (PRACTICUM_TOKEN, RETRY_TIME, TELEGRAM_CHAT_ID,
-                      TELEGRAM_TOKEN)
+from settings import (HOMEWORK_STATUSES, PRACTICUM_TOKEN, RETRY_TIME,
+                      TELEGRAM_CHAT_ID, TELEGRAM_TOKEN, set_logger)
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-handler = logging.StreamHandler(sys.stdout)
-logger.addHandler(handler)
-formatter = logging.Formatter(
-    '%(asctime)s %(levelname)s %(message)s'
-)
-handler.setFormatter(formatter)
-
-HOMEWORK_STATUSES = {
-    'approved': 'Работа проверена: ревьюеру всё понравилось. Ура!',
-    'reviewing': 'Работа взята на проверку ревьюером.',
-    'rejected': 'Работа проверена: у ревьюера есть замечания.'
-}
-
-ENDPOINT = 'https://practicum.yandex.ru/api/user_api/homework_statuses/'
 HEADERS = {'Authorization': f'OAuth {PRACTICUM_TOKEN}'}
+HOST = 'https://practicum.yandex.ru/api/user_api/'
+API_METHOD = 'homework_statuses/'
+
+
+logger = set_logger()
 
 
 def send_message(bot, message):
@@ -41,23 +30,23 @@ def get_api_answer(current_timestamp):
     """Запрос к эндпоинту API-сервиса."""
     timestamp = current_timestamp
     params = {'from_date': timestamp}
+    ENDPOINT = f'{HOST}{API_METHOD}'
     try:
         response = requests.get(ENDPOINT, headers=HEADERS, params=params)
     except Exception as error:
         logger.error(f'Ошибка при запросе к основному API: {error}')
-    else:
-        if response.status_code != HTTPStatus.OK:
-            logger.error(
-                f'Эндопоинт недоступен. Код ответа API: {response.status_code}'
-            )
-            raise ConnectionError
+    if response.status_code != HTTPStatus.OK:
+        logger.error(
+            f'Эндопоинт недоступен. Код ответа API: {response.status_code}'
+        )
+        raise ConnectionError
     return response.json()
 
 
 def check_response(response):
     """Проверка ответа API на корректность."""
     if type(response) != dict:
-        raise TypeError(f'Неверный тип ответа API: {type(response)}')
+        raise TypeError(f'Неверный тип ответа API: {response} {type(response)}')
     homework = response.get('homeworks')
     if homework is None:
         logger.error('Отсутсвует ожидаемый ключ')
