@@ -15,6 +15,10 @@ HEADERS = {'Authorization': f'OAuth {PRACTICUM_TOKEN}'}
 HOST = 'https://practicum.yandex.ru/api/user_api/'
 API_METHOD = 'homework_statuses/'
 
+logging.basicConfig(
+    format='%(asctime)s %(levelname)s %(message)s',
+    level=logging.INFO)
+
 logger = set_logger(__name__)
 
 
@@ -57,7 +61,7 @@ def check_response(response):
             f'Неверный тип ответа функции: {type(homework)}'
         )
     if not homework:
-        logger.info('Пустой список')
+        logging.info('Пустой список')
     return homework
 
 
@@ -77,7 +81,9 @@ def parse_status(homework):
         )
         raise KeyError
     verdict = HOMEWORK_STATUSES[homework_status]
-    return f'Изменился статус проверки работы "{homework_name}". {verdict}'
+    return (
+        f'Изменился статус проверки работы "{homework_name}". {verdict}'
+    )
 
 
 def check_tokens():
