@@ -9,7 +9,7 @@ import telegram
 from logger import set_logger
 from settings import (HEADERS, HOMEWORK_STATUSES, PRACTICUM_TOKEN,
                       RETRY_TIME, TELEGRAM_CHAT_ID, TELEGRAM_TOKEN)
-                      
+
 
 HOST = 'https://practicum.yandex.ru/api/user_api/'
 API_METHOD = 'homework_statuses/'
