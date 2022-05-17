@@ -11,8 +11,6 @@ from settings import (API_METHOD, HEADERS, HOMEWORK_STATUSES, HOST,
                       PRACTICUM_TOKEN, RETRY_TIME, TELEGRAM_CHAT_ID,
                       TELEGRAM_TOKEN)
 
-HOST = 'https://practicum.yandex.ru/api/user_api/'
-API_METHOD = 'homework_statuses/'
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)s %(message)s',
