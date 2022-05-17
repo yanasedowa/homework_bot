@@ -7,14 +7,15 @@ import requests
 import telegram
 
 from settings import (HOMEWORK_STATUSES, PRACTICUM_TOKEN, RETRY_TIME,
-                      TELEGRAM_CHAT_ID, TELEGRAM_TOKEN, set_logger)
+                      TELEGRAM_CHAT_ID, TELEGRAM_TOKEN)
+from logger import set_logger
+
 
 HEADERS = {'Authorization': f'OAuth {PRACTICUM_TOKEN}'}
 HOST = 'https://practicum.yandex.ru/api/user_api/'
 API_METHOD = 'homework_statuses/'
 
-
-logger = set_logger()
+logger = set_logger(__name__)
 
 
 def send_message(bot, message):

@@ -1,6 +1,4 @@
-import logging
 import os
-import sys
 
 from dotenv import load_dotenv
 
@@ -16,15 +14,3 @@ HOMEWORK_STATUSES = {
     'reviewing': 'Работа взята на проверку ревьюером.',
     'rejected': 'Работа проверена: у ревьюера есть замечания.'
 }
-
-
-def set_logger():
-    logger = logging.getLogger(__name__)
-    logger.setLevel(logging.INFO)
-    handler = logging.StreamHandler(sys.stdout)
-    logger.addHandler(handler)
-    formatter = logging.Formatter(
-        '%(asctime)s %(levelname)s %(message)s'
-    )
-    handler.setFormatter(formatter)
-    return logger
