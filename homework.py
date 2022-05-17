@@ -6,12 +6,11 @@ from http import HTTPStatus
 import requests
 import telegram
 
-from settings import (HOMEWORK_STATUSES, PRACTICUM_TOKEN, RETRY_TIME,
-                      TELEGRAM_CHAT_ID, TELEGRAM_TOKEN)
 from logger import set_logger
+from settings import (HEADERS, HOMEWORK_STATUSES, PRACTICUM_TOKEN,
+                      RETRY_TIME, TELEGRAM_CHAT_ID, TELEGRAM_TOKEN)
+                      
 
-
-HEADERS = {'Authorization': f'OAuth {PRACTICUM_TOKEN}'}
 HOST = 'https://practicum.yandex.ru/api/user_api/'
 API_METHOD = 'homework_statuses/'
 
