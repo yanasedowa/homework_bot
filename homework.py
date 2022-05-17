@@ -51,7 +51,9 @@ def get_api_answer(current_timestamp):
 def check_response(response):
     """Проверка ответа API на корректность."""
     if type(response) != dict:
-        raise TypeError(f'Неверный тип ответа API: {response} {type(response)}')
+        raise TypeError(
+            f'Неверный тип ответа API: {response} {type(response)}'
+        )
     homework = response.get('homeworks')
     if homework is None:
         logger.error('Отсутсвует ожидаемый ключ')
@@ -81,9 +83,7 @@ def parse_status(homework):
         )
         raise KeyError
     verdict = HOMEWORK_STATUSES[homework_status]
-    return (
-        f'Изменился статус проверки работы "{homework_name}". {verdict}'
-    )
+    return f'Изменился статус проверки работы "{homework_name}". {verdict}'
 
 
 def check_tokens():
